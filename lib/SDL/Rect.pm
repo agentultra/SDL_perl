@@ -14,9 +14,7 @@ bootstrap SDL::Rect;
 
 sub new
 {
-	my $class = shift;
-	#this is in SDL::Object now
-	return 	$class->_new(@_);
+	return shift->_new_pos([qw(x y w h)], @_);	
 }
 
 =head1 Perl binding to C stuct Rect
