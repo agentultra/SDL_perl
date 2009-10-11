@@ -43,8 +43,10 @@ SetRect(rect, x, y, w, h)
 		
 
 Sint16
-rect_RectX ( rect, ... )
+rect_x ( rect, ... )
 	SDL_Rect *rect
+	ALIAS:
+		left = 1
 	CODE:
 		if (items > 1 ) rect->x = SvIV(ST(1)); 
 		RETVAL = rect->x;
@@ -52,8 +54,10 @@ rect_RectX ( rect, ... )
 		RETVAL
 
 Sint16
-rect_RectY ( rect, ... )
+rect_y ( rect, ... )
 	SDL_Rect *rect
+	ALIAS:
+		top = 1
 	CODE:
 		if (items > 1 ) rect->y = SvIV(ST(1)); 
 		RETVAL = rect->y;
@@ -61,8 +65,10 @@ rect_RectY ( rect, ... )
 		RETVAL
 
 Uint16
-rect_RectW ( rect, ... )
+rect_w ( rect, ... )
 	SDL_Rect *rect
+	ALIAS:
+		width = 1
 	CODE:
 		if (items > 1 ) rect->w = SvIV(ST(1)); 
 		RETVAL = rect->w;
@@ -70,8 +76,10 @@ rect_RectW ( rect, ... )
 		RETVAL
 
 Uint16
-rect_RectH ( rect, ... )
+rect_h ( rect, ... )
 	SDL_Rect *rect
+	ALIAS:
+		height = 1
 	CODE:
 		if (items > 1 ) rect->h = SvIV(ST(1)); 
 		RETVAL = rect->h;
