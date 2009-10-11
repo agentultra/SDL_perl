@@ -12,6 +12,13 @@ use parent qw(SDL::Object Exporter DynaLoader);
 # Do not simply export all your public functions/methods/constants.
 bootstrap SDL::Rect;
 
+sub new
+{
+	my $class = shift;
+	#this is in SDL::Object now
+	return 	$class->_new(@_);
+}
+
 =head1 Perl binding to C stuct Rect
 =cut
 
