@@ -13,7 +13,7 @@
 MODULE = SDL::Rect 	PACKAGE = SDL::Rect    PREFIX = rect_
 
 SDL_Rect *
-rect_new (CLASS, x, y, w, h)
+rect__new (CLASS, x, y, w, h)
 	char* CLASS
 	Sint16 x
         Sint16 y
