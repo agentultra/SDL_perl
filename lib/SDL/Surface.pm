@@ -198,8 +198,9 @@ sub flip {
 }
 
 sub blit {
-		$_[1] = 0 unless defined $_[1];
-		$_[3] = 0 unless defined $_[3];
+		
+		$_[1] = SDL::NULL unless defined $_[1];
+		$_[3] = SDL::NULL unless defined $_[3];
 
 	if ($SDL::DEBUG) {
 		croak "SDL::Surface::blit requires SDL::Rect objects"
