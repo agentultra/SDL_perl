@@ -1,0 +1,66 @@
+
+Perl SDL Hacking Guide.
+
+TODO: make this a little more complete guide
+
+It is prolly high time we grabbed one of these.
+
+Right now there are three branchs in work.
+
+[SWIN] 1. Perl Developed Version (version 2) ("stable")
+[INXS] 2. XS Developed Version (version 3) (testing)
+[GROG] 3. Swig (version 4) (experimental)
+[TABL] 4. Layout of packages
+[BUGS] 5. Feedback
+
+[SWIN] 1. Perl Developed Version (version 2)
+
+location: $PERLSDL/lib
+
+Version 2 of lib Perl is working on being discontinued. There were more 
+than a few issues running the code produced in anything that could be 
+called a production environment.
+
+You are more than welcome to patch this code and use it. However development 
+has moved onto other sections that have shown to be somewhat more effectiver.
+
+[INXS] 2. XS Developed Version (version 3) (testing)
+
+location: $PERLSDL/src
+
+This is version 3. This is in the redesign branch of this sets of works. This 
+is more or less what is being worked with right now. Mostly finding issues 
+are now originating in bugs in libSDL and even some implementations of X11R7.
+If we do figure out a patch to those, we will send it to libSDL or the 
+implementation of X11R7 requiring it.
+
+Development is going well.
+
+[GROG] 3. Swig (version 4) (experimental)
+
+location: $PERLSDL/swig
+
+Version 4 has only recently started development, and largely should not work 
+in any form. Hence the experimental tag. We will keep you posted.
+
+[TABL] 4. Layout of Packages
+
+Generally it is fairly simple.
+
+We have:
+
+SDL::.*
+
+Which contains packages required to the base running of Perl SDL
+
+SDL::Game::.*
+
+Which contains extensions and additions that make games easier to construct.
+
+[BUGS] 5. Bugs
+
+Prolly your best bet is to do one of a few things:
+
+Check out #sdl on irc.perl.org in your perl client.
+
+Check out the Perl SDL bug tracker <note for later: insert URL>
