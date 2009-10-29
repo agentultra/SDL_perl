@@ -1,5 +1,8 @@
 Revision history for Perl extension SDL_perl.
 
+* v4.0.0 Octobre 29th 2009 Katrina Payne <FullMetalHarlot@NIMHLabs.com>
+  - Started work on the SWIG branch
+
 * ?
   - Fix bug with TTFSizeText, it actually returns 0 on success [acme]
   - Add display_format_alpha [acme]
