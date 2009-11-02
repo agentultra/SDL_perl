@@ -21,12 +21,13 @@ use Test::More tests => 35;
 
 my $surface
     = SDL::Surface->new( SDL::SDL_ANYFORMAT(), 640, 320, 8, 0, 0, 0, 0 );
+    #TODO: test SDL::Surface->new_from
 isa_ok( $surface, 'SDL::Surface' );
 is( $surface->w,     640, 'surface has width' );
 is( $surface->h,     320, 'surface has height' );
 is( $surface->pitch, 640, 'surface has pitch' );
 my $clip_rect = SDL::Rect->new( 0, 0, 0, 0 );
-SDL::GetClipRect( $surface, $clip_rect );
+SDL::Video::get_clip_rect( $surface, $clip_rect );
 isa_ok( $clip_rect, 'SDL::Rect' );
 is( $clip_rect->x, 0,   'clip_rect has x' );
 is( $clip_rect->y, 0,   'clip_rect has y' );
@@ -56,13 +57,13 @@ is( $pixel_format->Amask,         0,        '0 Amask' );
 is( $pixel_format->colorkey,      0,        '0 colorkey' );
 is( $pixel_format->alpha,         255,      '255 alpha' );
 
-my $pixel = SDL::MapRGB( $pixel_format, 255, 127, 0 );
+my $pixel = SDL::Video::map_RGB( $pixel_format, 255, 127, 0 );
 is( $pixel, 32767, '32767 pixel' );
-SDL::FillRect( $surface, SDL::Rect->new( 0, 0, 32, 32 ), $pixel );
+SDL::Video::fill_rect( $surface, SDL::Rect->new( 0, 0, 32, 32 ), $pixel );
 ok( 1, 'Managed to fill_rect' );
 
 my $small_rect = SDL::Rect->new( 0, 0, 64, 64 );
-SDL::BlitSurface( $image, $small_rect, $surface, $small_rect );
+SDL::Video::blit_surface( $image, $small_rect, $surface, $small_rect );
 ok( 1, 'Managed to blit' );
 
 #my $image_format = $surface->display;
@@ -80,18 +81,18 @@ my $app = SDL::App->new(
 
 pass 'did this pass';
 
-my $image_format = SDL::DisplayFormat($image);
+my $image_format = SDL::Video::display_format($image);
 isa_ok( $image_format, 'SDL::Surface' );
 
-my $image_format_alpha = SDL::DisplayFormatAlpha($image);
+my $image_format_alpha = SDL::Video::display_format_alpha($image);
 isa_ok( $image_format_alpha, 'SDL::Surface' );
 
 my $app_pixel_format = $app->format;
 
 my $rect = SDL::Rect->new( 0, 0, $app->w, $app->h );
 
-my $blue_pixel = SDL::MapRGB( $app_pixel_format, 0x00, 0x00, 0xff );
-SDL::FillRect( $app, $rect, $blue_pixel );
+my $blue_pixel = SDL::Video::map_RGB( $app_pixel_format, 0x00, 0x00, 0xff );
+SDL::Video::fill_rect( $app, $rect, $blue_pixel );
 SDL::Video::update_rect( $app, 0, 0, 0, 0 );
 SDL::Video::update_rects( $app, $small_rect );
 

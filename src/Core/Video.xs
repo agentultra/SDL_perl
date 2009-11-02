@@ -16,21 +16,15 @@ static Uint16* av_to_uint16 (AV* av)
 	{
 	int i;
 	Uint16* table = (Uint16 *)safemalloc(sizeof(Uint16)*(len));
-		//fprintf( stderr, "Expecting 1,2,5,6 \n Length is %d \n", len);
 	for ( i = 0; i < len+1 ; i++ ){ 
 		SV ** temp = av_fetch(av,i,0);
 	      if( temp != NULL)
 		{
-		table[i] =  (Uint16 *) SvIV(  *temp   )  ;
-		/* fprintf( stderr, "table[%d] = ", i);
-		 if (table[i] == NULL) { fprintf ( stderr, " NULL\n"); }
-		else{ fprintf(stderr, " %d \n", table[i]); } */
+			table[i] =  (Uint16 *) SvIV(  *temp   );
 		}
 		else { table[i] =0; }
 
 	}
-//		warn("Got %d %d %d %d \n", table[0], table[1], table[2], table[3] );
-
 	return table;
 	}
 	return NULL;
@@ -247,3 +241,180 @@ video_set_gamma_ramp( rt, gt, bt )
 	OUTPUT:
 		RETVAL 
 
+
+
+Uint32
+video_map_RGB ( pixel_format, r, g, b )
+	SDL_PixelFormat *pixel_format
+	Uint8 r
+	Uint8 g
+	Uint8 b
+	CODE:
+		RETVAL = SDL_MapRGB(pixel_format,r,g,b);
+	OUTPUT:
+		RETVAL
+
+Uint32
+video_map_RGBA ( pixel_format, r, g, b, a )
+	SDL_PixelFormat *pixel_format
+	Uint8 r
+	Uint8 g
+	Uint8 b	
+	Uint8 a
+	CODE:
+		RETVAL = SDL_MapRGBA(pixel_format,r,g,b,a);
+	OUTPUT:
+		RETVAL
+
+int
+video_lock_surface ( surface )
+	SDL_Surface *surface
+	CODE:
+		RETVAL = SDL_LockSurface(surface);
+	OUTPUT:
+		RETVAL
+
+void
+video_unlock_surface ( surface )
+	SDL_Surface *surface
+	CODE:
+		SDL_UnlockSurface(surface);
+
+
+SDL_Surface *
+video_convert_surface( src, fmt, flags)
+	SDL_Surface* src
+	SDL_PixelFormat* fmt
+	Uint32	flags
+	PREINIT:
+		char *CLASS = "SDL::Surface";
+	CODE:
+		RETVAL = SDL_ConvertSurface(src, fmt, flags);
+	OUTPUT:
+		RETVAL
+
+
+SDL_Surface *
+video_display_format ( surface )
+	SDL_Surface *surface
+	PREINIT:
+		char* CLASS = "SDL::Surface";
+	CODE:
+		RETVAL = SDL_DisplayFormat(surface);
+	OUTPUT:
+		RETVAL
+
+SDL_Surface *
+video_display_format_alpha ( surface )
+	SDL_Surface *surface
+	PREINIT:
+		char* CLASS = "SDL::Surface";
+	CODE:
+		RETVAL = SDL_DisplayFormatAlpha(surface);
+	OUTPUT:
+		RETVAL
+
+
+int
+video_set_color_key ( surface, flag, key )
+	SDL_Surface *surface
+	Uint32 flag
+	SDL_Color *key
+	CODE:
+		Uint32 pixel = SDL_MapRGB(surface->format,key->r,key->g,key->b);
+		RETVAL = SDL_SetColorKey(surface,flag,pixel);
+	OUTPUT:
+		RETVAL
+
+int
+video_set_alpha ( surface, flag, alpha )
+	SDL_Surface *surface
+	Uint32 flag
+	Uint8 alpha
+	CODE:
+		RETVAL = SDL_SetAlpha(surface,flag,alpha);
+	OUTPUT:
+		RETVAL
+
+AV *
+get_RGB ( pixel_format, pixel )
+	SDL_PixelFormat *pixel_format
+	Uint32 pixel
+	CODE:
+		Uint8 r,g,b;
+		SDL_GetRGB(pixel,pixel_format,&r,&g,&b);
+		RETVAL = newAV();
+		av_push(RETVAL,newSViv(r));
+		av_push(RETVAL,newSViv(g));
+		av_push(RETVAL,newSViv(b));
+	OUTPUT:
+		RETVAL
+
+AV *
+get_RGBA ( pixel_format, pixel )
+	SDL_PixelFormat *pixel_format
+	Uint32 pixel
+	CODE:
+		Uint8 r,g,b,a;
+		SDL_GetRGBA(pixel,pixel_format,&r,&g,&b,&a);
+		RETVAL = newAV();
+		av_push(RETVAL,newSViv(r));
+		av_push(RETVAL,newSViv(g));
+		av_push(RETVAL,newSViv(b));
+		av_push(RETVAL,newSViv(a));
+	OUTPUT:
+		RETVAL
+
+SDL_Surface*
+load_BMP ( filename )
+	char *filename
+	PREINIT:
+		char* CLASS = "SDL::Surface";
+	CODE:
+		RETVAL = SDL_LoadBMP(filename);
+	OUTPUT:
+		RETVAL
+
+int
+save_BMP ( surface, filename )
+	SDL_Surface *surface
+	char *filename
+	CODE:
+		RETVAL = SDL_SaveBMP(surface,filename);
+	OUTPUT:
+		RETVAL
+
+int
+fill_rect ( dest, dest_rect, pixel )
+	SDL_Surface *dest
+	SDL_Rect *dest_rect
+	Uint32 pixel
+	CODE:
+		RETVAL = SDL_FillRect(dest,dest_rect,pixel);
+	OUTPUT:
+		RETVAL
+
+int
+blit_surface ( src, src_rect, dest, dest_rect )
+	SDL_Surface *src
+	SDL_Surface *dest
+	SDL_Rect *src_rect
+	SDL_Rect *dest_rect
+	CODE:
+		RETVAL = SDL_BlitSurface(src,src_rect,dest,dest_rect);
+	OUTPUT:
+		RETVAL
+
+void
+set_clip_rect ( surface, rect )
+	SDL_Surface *surface
+	SDL_Rect *rect
+	CODE:
+		SDL_SetClipRect(surface,rect);
+
+void
+get_clip_rect ( surface, rect )
+	SDL_Surface *surface
+	SDL_Rect *rect;
+	CODE:
+		SDL_GetClipRect(surface, rect);
