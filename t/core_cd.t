@@ -3,6 +3,14 @@ use strict;
 use SDL;
 use Test::More;
 
+BEGIN {
+    use_ok('SDL::CD');
+}
+
+require_ok('SDL::CD');
+
+ok(CD_STOPPED, 'Module has CD_STOPPED constant');
+
 my @done = qw//;
 
 my @left = qw/

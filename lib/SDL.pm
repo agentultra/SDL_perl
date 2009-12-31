@@ -54,7 +54,7 @@ sub import {
   $self->export_to_level(1, @_);
   SDL::Constants->export_to_level(1);
 }
-our $VERSION = '2.3_3'; #Development Release
+our $VERSION = '2.3_4'; #Development Release
 $VERSION = eval $VERSION;
 
 print "$VERSION" if (defined($ARGV[0]) && ($ARGV[0] eq '--SDLperl'));
@@ -63,15 +63,6 @@ $SDL::DEBUG=0;
 
 sub NULL {
 	return 0;
-}
-
-sub in {
-	my ($k,@t) = @_;
-	return 0 unless defined $k;
-	my $r = ((scalar grep { defined $_ && $_ eq $k } @t) <=> 0);
-	return 0 if $r eq '';
-	return $r;
-
 }
 
 # workaround as:

@@ -1,5 +1,11 @@
 Revision history for Perl extension SDL_perl.
 
+* 2.3_4 (WIP)
+        - Fixed serious XS mem leaks in AV* [FROGGS]
+        - Removed usless verify method in SDL.pm [J_King]
+        - GFX rotozoom started [FROGGS]
+        - More docs for GFX [FROGGS]
+
 * 2.3_3
 	- SDL::Image implemented and tested [#72] [kthakore]
 	- FreeBSD SDL test clean up [#75] [kthakore]
@@ -9,6 +15,7 @@ Revision history for Perl extension SDL_perl.
 	- Added condition compile for mixer and ttf [kthakore]
 	- Replaced test file for MixMusic (proper file format) [FROGGS]
 	- Added license information file (README) for test/data [FROGGS]
+	- Moved mixer stuff from SDL:: to SDL::Mixer:: [FROGGS]
 
 * 2.3_1 
 	- General fixup for CPAN
